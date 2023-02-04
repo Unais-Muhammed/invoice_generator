@@ -1,0 +1,25 @@
+from fpdf import FPDF
+
+class Invoice:
+    def __init__(self, client, total):
+        self.client = client
+        self.total = total
+
+    def format_invoice(self):
+        return f'Invoice for client {self.client} with total amount of {self.total}.'
+
+def generate_invoice():
+    client = input("Enter the client's name: ")
+    total = float(input("Enter the total amount: "))
+    return Invoice(client, total).format_invoice()
+
+def save_invoice_pdf(invoice, filename):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt=invoice, ln=1, align="C")
+    pdf.output(filename)
+
+invoice = generate_invoice()
+filename = input("Enter the filename to save the invoice: ")
+save_invoice_pdf(invoice, filename)
